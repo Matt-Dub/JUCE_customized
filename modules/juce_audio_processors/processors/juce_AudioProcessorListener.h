@@ -69,6 +69,8 @@ public:
         bool programChanged           = false;
         /** @see withNonParameterStateChanged */
         bool nonParameterStateChanged = false;
+        /** TF-2 proto: @see withIoChanged. Revert before merging. */
+        bool ioChanged                = false;
 
         /** Indicates that the AudioProcessor's latency has changed.
 
@@ -111,6 +113,10 @@ public:
             @see nonParameterStateChanged
         */
         ChangeDetails withNonParameterStateChanged (bool b) const noexcept { return with (&ChangeDetails::nonParameterStateChanged, b); }
+
+        /** TF-2 proto: indicates a bus name changed, so the host should re-read
+            AudioProcessor::Bus::getName(). Revert before merging. */
+        ChangeDetails withIoChanged                (bool b) const noexcept { return with (&ChangeDetails::ioChanged,                b); }
 
         /** Returns the default set of flags that will be used when
             AudioProcessor::updateHostDisplay() is called with no arguments.

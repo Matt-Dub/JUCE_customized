@@ -1266,6 +1266,10 @@ public:
         if (details.nonParameterStateChanged)
             flags |= pluginShouldBeMarkedDirtyFlag;
 
+        // TF-2 proto: notify the host that a bus name changed. Revert before merging.
+        if (details.ioChanged)
+            flags |= Vst::kIoTitlesChanged;
+
         if (inSetupProcessing)
             flags &= Vst::kLatencyChanged;
 

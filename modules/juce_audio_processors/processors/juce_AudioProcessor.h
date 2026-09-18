@@ -367,6 +367,11 @@ public:
         /** The bus's name. */
         const String& getName() const noexcept                          { return name; }
 
+        /** TF-2 proto: rename this bus at runtime. Caller must follow up with
+            AudioProcessor::updateHostDisplay (ChangeDetails{}.withIoChanged (true))
+            for hosts to be notified. Revert before merging. */
+        void setName (const String& newName) noexcept                  { name = newName; }
+
         /** Get the default layout of this bus.
             @see AudioChannelSet
         */
