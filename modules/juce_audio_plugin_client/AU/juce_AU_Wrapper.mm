@@ -1760,10 +1760,11 @@ private:
             {
                 callbackFlags.fetch_or (flags);
 
-                if (MessageManager::getInstance()->isThisTheMessageThread())
-                    handleAsyncUpdate();
-                else
-                    triggerAsyncUpdate();
+                // Always defer, even on the message thread: HISE sends one parameterInfoChanged
+                // per UI control while the editor is built, and each synchronous
+                // kAudioUnitProperty_ParameterList notification makes the host (AUAudioUnitV2Bridge)
+                // rebuild the whole parameter tree. Deferring coalesces them into one rebuild.
+                triggerAsyncUpdate();
             }
         }
 
